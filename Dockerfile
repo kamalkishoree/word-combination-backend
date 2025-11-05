@@ -28,11 +28,11 @@ ENV APP_ENV=production \
 WORKDIR /var/www/html
 
 # System deps: nginx, supervisor, and useful tools
-RUN apk add --no-cache nginx supervisor bash curl git icu-data-full icu-libs libzip-dev oniguruma-dev libpng-dev libjpeg-turbo-dev libwebp-dev libxml2-dev freetype-dev
+RUN apk add --no-cache nginx supervisor bash curl git icu-data-full icu-libs libzip-dev oniguruma-dev libpng-dev libjpeg-turbo-dev libwebp-dev libxml2-dev freetype-dev postgresql-dev
 
 # PHP extensions commonly needed by Laravel
 RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype \
-    && docker-php-ext-install -j"$(nproc)" gd pdo pdo_mysql mbstring xml zip intl opcache
+    && docker-php-ext-install -j"$(nproc)" gd pdo pdo_mysql pdo_pgsql mbstring xml zip intl opcache
 
 # Copy application code
 COPY . .
